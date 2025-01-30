@@ -3,6 +3,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_log.h"
+#include "esp_crt_bundle.h"
 
 #include "esp_http_client.h"
 #include "connect_wifi.h"
@@ -49,6 +50,8 @@ void doSend(){
 
     esp_http_client_config_t config = {
         .url = twilio_url,
+        .transport_type = HTTP_TRANSPORT_OVER_SSL,
+        .crt_bundle_attach = esp_crt_bundle_attach,
         .method = HTTP_METHOD_GET   };
 
     esp_http_client_handle_t client = esp_http_client_init(&config);
